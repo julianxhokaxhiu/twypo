@@ -1,7 +1,6 @@
 # generische Menü-Strukturen
 twypo.list_menu = TMENU
 twypo.list_menu {
-	noBlur = 1
 	RO = 0
 
 	NO = 1
