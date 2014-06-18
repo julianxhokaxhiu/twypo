@@ -13,7 +13,7 @@ Twig for TYPO3
 ## Is it ready for production?
 Nope, it's not.
 
-But it's a Kickstart project that a lot of guys at [cron IT GmbH](http://www.cron.eu) helped me on starting this project.
+But it's a Kickstart that a lot of guys at [cron IT GmbH](http://www.cron.eu) helped me on starting this project.
 
 ## Why?
 Simply because there were a lot of POC but none of them was a working extension like "drop-in and run". So, this is my own effort to bring this kind of logic to the people that want to use it.
