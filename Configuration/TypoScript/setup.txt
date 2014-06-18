@@ -1,3 +1,39 @@
+# generische Menü-Strukturen
+twypo.list_menu = TMENU
+twypo.list_menu {
+	noBlur = 1
+	RO = 0
+
+	NO = 1
+	NO {
+		stdWrap.htmlSpecialChars = 1
+	}
+	ACT = 1
+	ACT {
+		stdWrap.htmlSpecialChars = 1
+	}
+
+	IFSUB = 1
+	IFSUB {
+		stdWrap.htmlSpecialChars = 1
+	}
+	ACTIFSUB = 1
+	ACTIFSUB {
+		stdWrap.htmlSpecialChars = 1
+	}
+}
+
+twypo.topnavi = HMENU
+twypo.topnavi.1 < twypo.list_menu
+twypo.topnavi.1 {
+	expAll = 1
+	NO.stdWrap.insertData = 1
+	IFSUB.stdWrap < .NO.stdWrap
+	ACT.stdWrap < .NO.stdWrap
+	ACTIFSUB.stdWrap < .NO.stdWrap
+}
+twypo.topnavi.2 < twypo.list_menu
+
 page = PAGE
 page {
 	config {
@@ -16,7 +52,7 @@ page {
 			baseUrl = TEXT
 			baseUrl.value < config.baseURL
 
-			menu < temp.topnavi
+			menu < twypo.topnavi
 		}
 	}
 }
