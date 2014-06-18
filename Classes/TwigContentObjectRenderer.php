@@ -44,6 +44,8 @@ class TwigContentObjectRenderer {
 	private $tplEngine = null;
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $objR ) {
+		require_once $this->_getPath( 'Vendor/autoload.php' );
+
 		$ret = '';
 
 		// Prepare our global container
@@ -70,8 +72,6 @@ class TwigContentObjectRenderer {
 
 	// Internal Only
 	private function initTwig() {
-		require_once $this->_getPath( 'Vendor/Twig/lib/Twig/Autoloader.php' );
-		\Twig_Autoloader::register();
 
 		$baseConfig = array_merge( array(
 			'debug' => true,
