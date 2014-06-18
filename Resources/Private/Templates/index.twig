@@ -1,0 +1,16 @@
+Hello Twig Engine! I am a Twig template right now :)
+
+{% set currentmenu = app.menu %}
+{% block printmenu %}
+<ul>
+{% for menu in currentmenu %}
+	<li>
+		<a href="{{ menu.href }}">{{ menu.title }}</a>
+		{% if menu.submenu is defined %}
+			{% set currentmenu = menu.submenu %}
+			{{ block('printmenu') }}
+		{% endif %}
+	</li>
+{% endfor %}
+</ul>
+{% endblock %}

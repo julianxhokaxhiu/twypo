@@ -1,0 +1,22 @@
+page = PAGE
+page {
+	config {
+		disableAllHeaderCode = 1
+		admPanel = 0
+		xhtml_cleaning = 0
+	}
+	10 = TWIGTEMPLATE
+	10 {
+		path = EXT:twypo/Resources/Private/Templates/
+		twigInitConf {
+			debug = true
+			cache = false
+		}
+		data {
+			baseUrl = TEXT
+			baseUrl.value < config.baseURL
+
+			menu < temp.topnavi
+		}
+	}
+}

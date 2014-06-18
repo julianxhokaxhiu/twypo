@@ -1,0 +1,2 @@
+  # cat=basic/enable; type=boolean; label=Include debug extension
+include_debug_extension = 1
