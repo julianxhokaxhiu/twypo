@@ -44,7 +44,8 @@ class TwigContentObjectRenderer {
 	private $tplEngine = null;
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $objR ) {
-		require_once $this->_getPath( 'Vendor/autoload.php' );
+		require_once $this->_getPath( 'Vendor/Twig/lib/Twig/Autoloader.php' );
+        \Twig_Autoloader::register();
 
 		$ret = '';
 
@@ -88,10 +89,11 @@ class TwigContentObjectRenderer {
 	}
 
 	private function assignData($conf) {
-		global $TSFE, $TWYPO;
+		global $TWYPO;
 
 		$ret = array();
 
+        // Render TypoScript objects
 		foreach( $conf['data.'] as $key => $value ) {
 			if ( !(substr( $key, -1, 1 ) == '.') ) {
 				$ret[$key] = $this->cObj->cObjGetSingle( $conf['data.'][$key], $conf['data.'][$key . '.'] );
