@@ -39,8 +39,6 @@ class TwigContentObjectRenderer {
 
 	private $twigUserConf = array();
 
-	private $cachePath = 'typo3temp/Cache/Twig';
-
 	private $tplEngine = null;
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $objR ) {
@@ -75,8 +73,7 @@ class TwigContentObjectRenderer {
 	private function initTwig() {
 
 		$baseConfig = array_merge( array(
-			'debug' => true,
-			'cache' => $this->cachePath
+			'debug' => true
 		), $this->twigUserConf );
 
 		$loader = new \Twig_Loader_Filesystem($this->templatesPath);
