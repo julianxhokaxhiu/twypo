@@ -66,9 +66,8 @@ page {
 			baseUrl = TEXT
 			baseUrl.value < config.baseURL
 
-			menu < twypo.topnavi
-
-			content < twypo.maincontent
+			1 < twypo.topnavi
+			2 < twypo.maincontent
 		}
 	}
 }
