@@ -102,12 +102,11 @@ class TwigContentObjectRenderer {
         	}
         	case 'CONTENT': {
         		$data = $params['data'];
-        		$linkDefinition = $params['linkData'];
 
         		$ret['page'] = array(
 					'title' => $data['title'],
 					'subtitle' => $data['subtitle'],
-					'url' => $linkDefinition['totalURL'],
+					'url' => $this->templateData['baseUrl'] . $this->templateData['currentPageUrl'],
 					'meta' => array(
 						'keywords' => $data['keywords'],
 						'description' => $data['description'],
