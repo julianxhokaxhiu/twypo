@@ -1,8 +1,6 @@
 config {
 	no_cache = 1
 	renderCharset = utf-8
-    metaCharset = utf-8
-    doctype = html5
 }
 
 # generische Menü-Strukturen
@@ -45,18 +43,17 @@ twypo.maincontent {
 	table = tt_content
 	select {
 		orderBy = sorting
-		where = colPos = 0
 	}
 }
 
 page = PAGE
 page {
+    # Make the output cleaner
 	config {
 		disableAllHeaderCode = 1
 		admPanel = 0
 		xhtml_cleaning = 0
 	}
-	typeNum = 0
 	10 = TWIGTEMPLATE
 	10 {
 		path = EXT:twypo/Resources/Private/Templates/
@@ -67,7 +64,7 @@ page {
 		}
 		data {
 			baseUrl = TEXT
-			baseUrl.value < config.baseURL
+			baseUrl.value = //localhost/typo3/
 
 			1 < twypo.topnavi
 			2 < twypo.maincontent
