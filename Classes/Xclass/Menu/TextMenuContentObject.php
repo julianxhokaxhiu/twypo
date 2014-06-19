@@ -30,10 +30,6 @@ class TextMenuContentObject extends \TYPO3\CMS\Frontend\ContentObject\Menu\TextM
 		global $TWYPO;
 
 		if (is_array($this->result) && count($this->result)) {
-			// Do this only once
-			if ( !isset($TWYPO['menu']) )
-				$TWYPO['menu'] = array();
-
 			// Create new \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer for our use
 			$this->WMcObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
 			$this->WMresult = '';
@@ -44,31 +40,14 @@ class TextMenuContentObject extends \TYPO3\CMS\Frontend\ContentObject\Menu\TextM
 			foreach ($this->result as $key => $val) {
 				$this->WMcObj->start($this->menuArr[$key], 'pages');
 				$this->extProc_beforeLinking($key);
-				$this->_TwypoScrapData( $this->WMcObj->data, $this->link($key, $this->I['val']['altTarget'], $this->mconf['forceTypeValue']) );
+				$TWYPO->scrapeData( 'MENU', array(
+					'data' => $this->WMcObj->data,
+					'linkData' => $this->link($key, $this->I['val']['altTarget'], $this->mconf['forceTypeValue'])
+				));
 				$this->subMenu($this->menuArr[$key]['uid'], $this->WMsubmenuObjSuffixes[$key]['sOSuffix']);
 			}
 
 			return $this->extProc_finish();
-		}
-	}
-
-	private function _TwypoScrapData($data, $linkDefinition) {
-		global $TWYPO;
-
-		// Prepare the array
-		$item = array(
-			'title' => $data['title'],
-			'href' => $linkDefinition['HREF'],
-			'target' => $linkDefinition['TARGET']
-		);
-
-		if ( array_key_exists($data['pid'], $TWYPO['menu']) ) {
-			// It's a children menu
-			if ( !isset( $TWYPO['menu'][ $data['pid'] ]['submenu'] ) ) $TWYPO['menu'][ $data['pid'] ]['submenu'] = array();
-			array_push( $TWYPO['menu'][ $data['pid'] ]['submenu'], $item );
-		} else {
-			// It's a global menu
-			$TWYPO['menu'][ $data['uid'] ] = $item;
 		}
 	}
 

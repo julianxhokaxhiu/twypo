@@ -27,23 +27,15 @@ namespace JX\Twypo\Xclass;
 class ContentContentObject extends \TYPO3\CMS\Frontend\ContentObject\ContentContentObject {
 
 	public function render($conf = array()) {
+        global $TWYPO;
+
 		parent::render($conf);
-		$this->_TwypoScrapData($this->cObj->data, $this->cObj->lastTypoLinkLD);
-	}
+		$TWYPO->scrapeData('CONTENT', array(
+            'data' => $this->cObj->data,
+            'linkData' => $this->cObj->lastTypoLinkLD
+        ));
 
-	private function _TwypoScrapData($data, $linkDefinition) {
-		global $TWYPO;
-
-		$TWYPO['page'] = array(
-			'title' => $data['title'],
-			'subtitle' => $data['subtitle'],
-			'url' => $linkDefinition['totalURL'],
-			'meta' => array(
-				'keywords' => $data['keywords'],
-				'description' => $data['description'],
-				'abstract' => $data['abstract']
-			)
-		);
+        var_dump($this->cObj->lastTypoLinkLD);
 	}
 
 }
