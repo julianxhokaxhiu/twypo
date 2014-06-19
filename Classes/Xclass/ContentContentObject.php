@@ -31,11 +31,8 @@ class ContentContentObject extends \TYPO3\CMS\Frontend\ContentObject\ContentCont
 
 		parent::render($conf);
 		$TWYPO->scrapeData('CONTENT', array(
-            'data' => $this->cObj->data,
-            'linkData' => $this->cObj->lastTypoLinkLD
+            'data' => $this->cObj->data
         ));
-
-        var_dump($this->cObj->lastTypoLinkLD);
 	}
 
 }
