@@ -44,6 +44,14 @@ twypo.maincontent {
 	select {
 		orderBy = sorting
 	}
+	renderObj < tt_content
+	renderObj {
+		text = USER
+		text.userFunc = \JX\Twypo\TwypoUserHooks->scrapeTextData
+
+		textpic = USER
+		textpic.userFunc = \JX\Twypo\TwypoUserHooks->scrapeTextPicData
+	}
 }
 
 page = PAGE
