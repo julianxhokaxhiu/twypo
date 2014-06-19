@@ -48,7 +48,7 @@ class TwigContentObjectRenderer {
 		$ret = '';
 
 		// Prepare our global container
-		$GLOBALS['TWYPO'] = array();
+		$GLOBALS['TWYPO'] = $this;
 
 		// Read the configuration
 		$this->cObj = $objR;
@@ -69,6 +69,59 @@ class TwigContentObjectRenderer {
 		return $ret;
 	}
 
+	// Public API to be called by other components
+	public function scrapeData( $type = '', $params = array() ) {
+        $ret = $this->templateData;
+
+        switch ( $type ) {
+        	case 'MENU': {
+        		$data = $params['data'];
+        		$linkDefinition = $params['linkData'];
+
+        		// Do this only once
+				if ( !isset($ret['menu']) )
+					$ret['menu'] = array();
+
+        		// Prepare the array
+				$item = array(
+					'title' => $data['title'],
+					'href' => $this->templateData['baseUrl'] . $linkDefinition['HREF'],
+					'target' => $linkDefinition['TARGET']
+				);
+
+				if ( array_key_exists($data['pid'], $ret['menu']) ) {
+					// It's a children menu
+					if ( !isset( $ret['menu'][ $data['pid'] ]['submenu'] ) ) $ret['menu'][ $data['pid'] ]['submenu'] = array();
+					array_push( $ret['menu'][ $data['pid'] ]['submenu'], $item );
+				} else {
+					// It's a global menu
+					$ret['menu'][ $data['uid'] ] = $item;
+				}
+
+        		break;
+        	}
+        	case 'CONTENT': {
+        		$data = $params['data'];
+        		$linkDefinition = $params['linkData'];
+
+        		$ret['page'] = array(
+					'title' => $data['title'],
+					'subtitle' => $data['subtitle'],
+					'url' => $linkDefinition['totalURL'],
+					'meta' => array(
+						'keywords' => $data['keywords'],
+						'description' => $data['description'],
+						'abstract' => $data['abstract']
+					)
+				);
+        		break;
+        	}
+        	default: break;
+        }
+
+        $this->templateData = $ret;
+    }
+
 	// Internal Only
 	private function initTwig() {
 
@@ -86,19 +139,12 @@ class TwigContentObjectRenderer {
 	}
 
 	private function assignData($conf) {
-		global $TWYPO;
-
-		$ret = array();
-
         // Render TypoScript objects
 		foreach( $conf['data.'] as $key => $value ) {
 			if ( !(substr( $key, -1, 1 ) == '.') ) {
-				$ret[$key] = $this->cObj->cObjGetSingle( $conf['data.'][$key], $conf['data.'][$key . '.'] );
+				$this->templateData[$key] = $this->cObj->cObjGetSingle( $conf['data.'][$key], $conf['data.'][$key . '.'] );
 			}
 		}
-
-		// Save the data for later use
-		$this->templateData = array_merge( $ret, $TWYPO );
 	}
 
 	private function render() {
