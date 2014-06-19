@@ -4,7 +4,7 @@ twypo
 Twig for TYPO3
 
 ## How to use it
-1. [Download this repo](https://github.com/julianxhokaxhiu/twypo/archive/master.zip) and place it inside the `typo3conf/ext/twypo` folder.
+1. `cd path/to/your/typo3conf/ext && git clone https://github.com/julianxhokaxhiu/twypo.git --recursive`
 2. Install/Enable the "Twypo" extension inside your Backend
 3. In `Include static (from extensions):` of your main template add the voice `Twypo: Default Setup`.
 4. Refresh your page and you're done.
