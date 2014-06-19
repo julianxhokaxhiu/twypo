@@ -1,16 +1,41 @@
+{% spaceless %}
+<h1>This prints if Twypo is working</h1>
 Hello Twig Engine! I am a Twig template right now :)
 
-{% set currentmenu = app.menu %}
+<hr>
+
+<h1>This prints if Menu Data exists</h1>
+{% set items = app.menu %}
 {% block printmenu %}
-<ul>
-{% for menu in currentmenu %}
-	<li>
-		<a href="{{ menu.href }}">{{ menu.title }}</a>
-		{% if menu.submenu is defined %}
-			{% set currentmenu = menu.submenu %}
-			{{ block('printmenu') }}
-		{% endif %}
-	</li>
-{% endfor %}
-</ul>
+    <ul>
+        {% for menu in items %}
+        	<li>
+        		<a href="{{ menu.href }}">{{ menu.title }}</a>
+        		{% if menu.submenu is defined %}
+        			{% set items = menu.submenu %}
+        			{{ block('printmenu') }}
+        		{% endif %}
+        	</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
+
+<hr>
+
+<h1>This prints the current page information</h1>
+{% set items = app.page %}
+{% block printpageinfo %}
+    {% for key, value in items %}
+        {% if value is not iterable %}
+        <strong>{{key}}:</strong><span>&nbsp;{{value}}</span>
+        {% endif %}
+        {% if not loop.last %}
+        <br>
+        {% endif %}
+        {% if value is iterable %}
+            {% set items = value %}
+            {{ block('printpageinfo') }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+{% endspaceless %}
