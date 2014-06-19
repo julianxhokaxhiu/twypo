@@ -58,8 +58,9 @@ page {
 	10 {
 		path = EXT:twypo/Resources/Private/Templates/
 		twigInitConf {
+			auto_reload = true
 			debug = true
-			cache = false
+			cache = typo3temp/Cache/Twig
 		}
 		data {
 			baseUrl = TEXT
