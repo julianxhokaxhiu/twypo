@@ -1,3 +1,7 @@
+config {
+	no_cache = 1
+}
+
 # generische Menü-Strukturen
 twypo.list_menu = TMENU
 twypo.list_menu {
@@ -33,6 +37,15 @@ twypo.topnavi.1 {
 }
 twypo.topnavi.2 < twypo.list_menu
 
+twypo.maincontent = CONTENT
+twypo.maincontent {
+	table = tt_content
+	select {
+		orderBy = sorting
+		where = colPos = 0
+	}
+}
+
 page = PAGE
 page {
 	config {
@@ -40,6 +53,7 @@ page {
 		admPanel = 0
 		xhtml_cleaning = 0
 	}
+	typeNum = 0
 	10 = TWIGTEMPLATE
 	10 {
 		path = EXT:twypo/Resources/Private/Templates/
@@ -52,6 +66,8 @@ page {
 			baseUrl.value < config.baseURL
 
 			menu < twypo.topnavi
+
+			content < twypo.maincontent
 		}
 	}
 }
