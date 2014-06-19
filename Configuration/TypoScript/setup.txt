@@ -1,5 +1,8 @@
 config {
 	no_cache = 1
+	renderCharset = utf-8
+    metaCharset = utf-8
+    doctype = html5
 }
 
 # generische Menü-Strukturen
