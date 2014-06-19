@@ -66,6 +66,12 @@ page {
 			baseUrl = TEXT
 			baseUrl.value = //localhost/typo3/
 
+			currentPageUrl = TEXT
+			currentPageUrl.typolink {
+				parameter.data=TSFE:id
+				returnLast=url
+			}
+
 			1 < twypo.topnavi
 			2 < twypo.maincontent
 		}
