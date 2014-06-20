@@ -30,15 +30,30 @@ class TwigContentObjectRenderer {
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $parent ) {
 		global $TSFE, $TWYPO;
-		$ret = array();
 
+		// Get current page info
+		$data = $TSFE->page;
+		$page = array(
+			'title' => $data['title'],
+			'subtitle' => $data['subtitle'],
+			'url' => $TWYPO->get('baseUrl') . $TWYPO->get('currentPageUrl'),
+			'meta' => array(
+				'keywords' => $data['keywords'],
+				'description' => $data['description'],
+				'abstract' => $data['abstract']
+			)
+		);
+		$TWYPO->assign('page', $page);
+
+		// Get current page items and push to the array
 		$colMapping = $TWYPO->get('_colMapping');
 		$items = $TWYPO->renderConf( $conf );
-
-		foreach($items as $item) {
-			$ret[ $colMapping[intval($item['colPos'])] ] = $item;
+		$content = array();
+		if( count($items) > 0 ) {
+			foreach($items as $item) {
+				$content[ $colMapping[intval($item['colPos'])] ] = $item;
+			}
 		}
-
-		$TWYPO->assign('content', $ret);
+		$TWYPO->assign('content', $content);
 	}
 }
