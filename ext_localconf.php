@@ -20,6 +20,3 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['cObjTypeAndClas
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Frontend\\ContentObject\\Menu\\TextMenuContentObject'] = array(
     'className' => 'JX\\Twypo\\Xclass\\Menu\\TextMenuContentObject',
 );
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Frontend\\ContentObject\\ContentContentObject'] = array(
-    'className' => 'JX\\Twypo\\Xclass\\ContentContentObject',
-);
