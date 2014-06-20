@@ -88,9 +88,11 @@ page {
 				parameter.data=TSFE:id
 				returnLast=url
 			}
-
-			colMapping = TWIGCOLUMNMAPPING
-			colMapping {
+		}
+		render {
+			1 < twypo.mainmenu
+			2 = TWIGCOLUMNMAPPING
+			2 {
 				0 = TEXT
 				0.value = middle
 				1 = TEXT
@@ -100,10 +102,7 @@ page {
 				3 = TEXT
 				3.value = border
 			}
-		}
-		render {
-			1 < twypo.mainmenu
-			2 < twypo.content
+			3 < twypo.content
 		}
 	}
 }
