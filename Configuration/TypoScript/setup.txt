@@ -54,7 +54,7 @@ twypo.content {
 							import = fileadmin/user_upload/
 						}
 					}
-					wrap = /|
+					wrap = /|,
 				}
 			}
 		}
