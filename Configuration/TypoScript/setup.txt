@@ -50,19 +50,19 @@ twypo.contentitems {
 	}
 	fieldRendering {
 		image {
-	        split{
-				token =,
+	        split {
+				token = ,
 				cObjNum = 1
 				1 = COA
 				1 {
 					5 = IMG_RESOURCE
 					5 {
-						file{
+						file {
 							import.current = 1
-							import = uploads/pics/
+							import = fileadmin/user_upload/
 						}
 					}
-					wrap = http://typo3.sencha-touch.de/|,
+					wrap = /|
 				}
 			}
 		}
@@ -100,9 +100,9 @@ page {
 			colMapping = TWIGCOLUMNMAPPING
 			colMapping {
 				0 = TEXT
-				0.value = left
+				0.value = middle
 				1 = TEXT
-				1.value = middle
+				1.value = left
 				2 = TEXT
 				2.value = right
 				3 = TEXT
