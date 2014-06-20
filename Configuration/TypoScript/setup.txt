@@ -1,11 +1,6 @@
-config {
-	no_cache = 1
-	renderCharset = utf-8
-}
-
 # generische Menü-Strukturen
-twypo.list_menu = TMENU
-twypo.list_menu {
+twypo.tmenu = TMENU
+twypo.tmenu {
 	RO = 0
 
 	NO = 1
@@ -27,31 +22,51 @@ twypo.list_menu {
 	}
 }
 
-twypo.topnavi = HMENU
-twypo.topnavi.1 < twypo.list_menu
-twypo.topnavi.1 {
+twypo.mainmenu = HMENU
+twypo.mainmenu.1 < twypo.tmenu
+twypo.mainmenu.1 {
 	expAll = 1
 	NO.stdWrap.insertData = 1
 	IFSUB.stdWrap < .NO.stdWrap
 	ACT.stdWrap < .NO.stdWrap
 	ACTIFSUB.stdWrap < .NO.stdWrap
 }
-twypo.topnavi.2 < twypo.list_menu
+twypo.mainmenu.2 < twypo.tmenu
 
-twypo.maincontent = CONTENT
-twypo.maincontent {
+twypo.pagecontent = CONTENT
+twypo.pagecontent {
 	table = tt_content
 	select {
 		orderBy = sorting
 	}
-	renderObj < tt_content
-	renderObj {
-		text = USER
-		text.userFunc = \JX\Twypo\TwypoUserHooks->scrapeTextData
+}
 
-		textpic = USER
-		textpic.userFunc = \JX\Twypo\TwypoUserHooks->scrapeTextPicData
+twypo.contentitems = TWIGCONTENT
+twypo.contentitems {
+	table = tt_content
+	select {
+		selectFields = uid, pid, header, bodytext, image, header_link, colPos
+		orderBy = sorting
 	}
+	fieldRendering {
+		image {
+	        split{
+				token =,
+				cObjNum = 1
+				1 = COA
+				1 {
+					5 = IMG_RESOURCE
+					5 {
+						file{
+							import.current = 1
+							import = uploads/pics/
+						}
+					}
+					wrap = http://typo3.sencha-touch.de/|,
+				}
+			}
+		}
+    }
 }
 
 page = PAGE
@@ -61,6 +76,8 @@ page {
 		disableAllHeaderCode = 1
 		admPanel = 0
 		xhtml_cleaning = 0
+		debug = 0
+		no_cache = 1
 	}
 	10 = TWIGTEMPLATE
 	10 {
@@ -80,8 +97,22 @@ page {
 				returnLast=url
 			}
 
-			1 < twypo.topnavi
-			2 < twypo.maincontent
+			colMapping = TWIGCOLUMNMAPPING
+			colMapping {
+				0 = TEXT
+				0.value = left
+				1 = TEXT
+				1.value = middle
+				2 = TEXT
+				2.value = right
+				3 = TEXT
+				3.value = border
+			}
+
+			contentitems < twypo.contentitems
+
+			1 < twypo.mainmenu
+			2 < twypo.pagecontent
 		}
 	}
 }
