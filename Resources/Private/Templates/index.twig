@@ -28,9 +28,9 @@ Hello Twig Engine! I am a Twig template right now :)
     {% for key, value in items %}
         {% if value is not iterable %}
         <strong>{{key}}:</strong><span>&nbsp;{{value}}</span>
-        {% endif %}
-        {% if not loop.last %}
-        <br>
+		    {% if not loop.last %}
+		    <br>
+		    {% endif %}
         {% endif %}
         {% if value is iterable %}
             {% set items = value %}
