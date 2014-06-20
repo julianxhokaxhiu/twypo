@@ -46,7 +46,7 @@ class TwigContentObjectRenderer {
 		$TWYPO->assign('page', $page);
 
 		// Get current page items and push to the array
-		$colMapping = $TWYPO->get('_colMapping');
+		$colMapping = $TWYPO->get('colMapping');
 		$items = $TWYPO->renderConf( $conf );
 		$content = array();
 		if( count($items) > 0 ) {

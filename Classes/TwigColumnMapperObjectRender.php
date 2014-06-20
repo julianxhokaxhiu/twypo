@@ -38,6 +38,6 @@ class TwigColumnMapperObjectRender {
 			}
 		}
 
-		$TWYPO->assign( '_colMapping', $ret );
+		$TWYPO->assign( 'colMapping', $ret );
 	}
 }
