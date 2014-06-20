@@ -77,24 +77,26 @@ class TwigPageObjectRenderer {
         switch ( $type ) {
         	case 'MENU': {
         		$key = 'menu';
-        		$ret = $this->get('menu');
+        		$ret = $this->get($key);
         		$data = $params['data'];
         		$linkDefinition = $params['linkData'];
 
         		// Prepare the array
 				$item = array(
 					'title' => $data['title'],
-					'href' => $this->templateData['baseUrl'] . $linkDefinition['HREF'],
+					'href' => $this->get('baseUrl') . $linkDefinition['HREF'],
 					'target' => $linkDefinition['TARGET']
 				);
 
-				if ( array_key_exists($data['pid'], $ret) ) {
+				$id = 'id'.$data['uid'];
+				if ( array_key_exists('id'.$data['pid'], $ret) ) {
+					$id = 'id'.$data['pid'];
 					// It's a children menu
-					if ( !isset( $ret[ $data['pid'] ]['submenu'] ) ) $ret[ $data['pid'] ]['submenu'] = array();
-					array_push( $ret[ $data['pid'] ]['submenu'], $item );
+					if ( !isset( $ret[$id]['submenu'] ) ) $ret[$id]['submenu'] = array();
+					array_push( $ret[$id]['submenu'], $item );
 				} else {
 					// It's a global menu
-					$ret[ $data['uid'] ] = $item;
+					$ret[$id] = $item;
 				}
 
         		break;
@@ -111,8 +113,7 @@ class TwigPageObjectRenderer {
 						'keywords' => $data['keywords'],
 						'description' => $data['description'],
 						'abstract' => $data['abstract']
-					),
-					'content' => array()
+					)
 				);
         		break;
         	}
@@ -129,7 +130,11 @@ class TwigPageObjectRenderer {
 
 	// Public API to assign template data from any extension
 	public function assign($key, $value) {
-		$this->templateData[$key] = $value;
+		if ( is_array($value) ) {
+			if ( !isset($this->templateData[$key]) ) $this->templateData[$key] = array();
+			$this->templateData[$key] = array_merge( $this->templateData[$key], $value );
+		} else
+			$this->templateData[$key] = $value;
 	}
 
 	// Public API to query the DB and get the result back
