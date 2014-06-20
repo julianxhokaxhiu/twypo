@@ -18,7 +18,7 @@ But it's a Kickstart that a lot of guys at [cron IT GmbH](http://www.cron.eu) he
 Simply because there were a lot of POC but none of them was a working extension like "drop-in and run". So, this is my own effort to bring this kind of logic to the people that want to use it.
 
 ## What can you do for me?
-If you're a TYPO3 developer, you can help me to scrape the data from the system to arrays/dictionaries. Also, the backend should be extended to give the user the choice of which template to use per page.
+If you're a TYPO3 developer, you can help me to scrape in the correct way the data from the system to arrays/dictionaries.
 
 If you're a user, then just wait for it to be ready.
 
