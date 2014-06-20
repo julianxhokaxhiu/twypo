@@ -33,16 +33,8 @@ twypo.mainmenu.1 {
 }
 twypo.mainmenu.2 < twypo.tmenu
 
-twypo.pagecontent = CONTENT
-twypo.pagecontent {
-	table = tt_content
-	select {
-		orderBy = sorting
-	}
-}
-
-twypo.contentitems = TWIGCONTENT
-twypo.contentitems {
+twypo.content = TWIGCONTENT
+twypo.content {
 	table = tt_content
 	select {
 		selectFields = uid, pid, header, bodytext, image, header_link, colPos
@@ -108,11 +100,10 @@ page {
 				3 = TEXT
 				3.value = border
 			}
-
-			contentitems < twypo.contentitems
-
+		}
+		render {
 			1 < twypo.mainmenu
-			2 < twypo.pagecontent
+			2 < twypo.content
 		}
 	}
 }
