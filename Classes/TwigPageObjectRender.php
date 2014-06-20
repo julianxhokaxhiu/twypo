@@ -27,9 +27,9 @@ namespace JX\Twypo;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-class TwigPageObjectRenderer {
+class TwigPageObjectRender {
 
-	const CONTENT_OBJECT_NAME = 'TWIGTEMPLATE';
+	const CONTENT_OBJECT_NAME = 'TWIG_TEMPLATE';
 
 	private $cObj = null;
 
@@ -40,6 +40,8 @@ class TwigPageObjectRenderer {
 	private $twigUserConf = array();
 
 	private $tplEngine = null;
+
+	private $internalData = array();
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $parent ) {
 		require_once $this->_getPath( 'Vendor/Twig/lib/Twig/Autoloader.php' );
@@ -107,9 +109,14 @@ class TwigPageObjectRenderer {
         $this->assign( $key, $ret );
     }
 
-    // Public API to get parsed data from TypoScript configuration
+    // Public API to get template data from TypoScript configuration
     public function get($key) {
     	return $this->templateData[$key];
+    }
+
+    // Public API to get internal data
+    public function getInternal($key) {
+    	return $this->internalData[$key];
     }
 
 	// Public API to assign template data from any extension
@@ -119,6 +126,15 @@ class TwigPageObjectRenderer {
 			$this->templateData[$key] = array_merge( $this->templateData[$key], $value );
 		} else
 			$this->templateData[$key] = $value;
+	}
+
+	// Public API to assign internal data from any extension
+	public function assignInternal($key, $value) {
+		if ( is_array($value) ) {
+			if ( !isset($this->internalData[$key]) ) $this->internalData[$key] = array();
+			$this->internalData[$key] = array_merge( $this->internalData[$key], $value );
+		} else
+			$this->internalData[$key] = $value;
 	}
 
 	// Public API to query the DB and get the result back
@@ -228,7 +244,12 @@ class TwigPageObjectRenderer {
 	}
 
 	private function render() {
-		return $this->tplEngine->render( 'index.twig', array(
+		// Get the mapping and the current page layout
+		$layoutMapping = $this->getInternal('layoutMapping');
+		$pageLayout = $this->getInternal('pageLayout');
+
+		// Render the page using the chosen layout
+		return $this->tplEngine->render( $layoutMapping[intval($pageLayout)] , array(
 			'app' => $this->templateData
 		));
 	}
