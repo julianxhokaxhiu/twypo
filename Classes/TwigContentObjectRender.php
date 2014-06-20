@@ -54,7 +54,15 @@ class TwigContentObjectRender {
 		$content = array();
 		if( count($items) > 0 ) {
 			foreach($items as $item) {
-				$content[ $colMapping[intval($item['colPos'])] ] = $item;
+				if ( !isset($content[ $colMapping[intval($item['colPos'])] ]) )
+					$content[ $colMapping[intval($item['colPos'])] ] = array();
+
+				array_push($content[ $colMapping[intval($item['colPos'])] ], array(
+					'title' => $item['header'],
+					'text' => $item['bodytext'],
+					'link' => $item['header_link'],
+					'imageUrls' => explode(',', $item['image'])
+				));
 			}
 		}
 		$TWYPO->assign('content', $content);
