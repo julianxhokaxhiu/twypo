@@ -29,13 +29,16 @@ class TwigContentObjectRenderer {
 	const CONTENT_OBJECT_NAME = 'TWIGCONTENT';
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $parent ) {
-		global $TWYPO;
-
-		$colMapping = $TWYPO->get('_colMapping');
-		$page = $TWYPO->renderConf( $conf );
-
+		global $TSFE, $TWYPO;
 		$ret = array();
 
-		var_dump($page, $colMapping);
+		$colMapping = $TWYPO->get('_colMapping');
+		$items = $TWYPO->renderConf( $conf );
+
+		foreach($items as $item) {
+			$ret[ $colMapping[intval($item['colPos'])] ] = $item;
+		}
+
+		$TWYPO->assign('content', $ret);
 	}
 }
