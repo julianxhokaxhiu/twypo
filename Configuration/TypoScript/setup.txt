@@ -71,7 +71,7 @@ page {
 		debug = 0
 		no_cache = 1
 	}
-	10 = TWIGTEMPLATE
+	10 = TWIG_TEMPLATE
 	10 {
 		path = EXT:twypo/Resources/Private/Templates/
 		twigInitConf {
@@ -91,7 +91,7 @@ page {
 		}
 		render {
 			1 < twypo.mainmenu
-			2 = TWIGCOLUMNMAPPING
+			2 = TWYPO_COLUMN_MAPPING
 			2 {
 				0 = TEXT
 				0.value = middle
@@ -102,7 +102,14 @@ page {
 				3 = TEXT
 				3.value = border
 			}
-			3 < twypo.content
+			3 = TWYPO_LAYOUT_MAPPING
+			3 {
+				0 = TEXT
+				0.value = index.twig
+				1 = TEXT
+				1.value = layout1.twig
+			}
+			99 < twypo.content
 		}
 	}
 }
