@@ -24,3 +24,32 @@ If you're a user, then just wait for it to be ready.
 
 ## Which is the license of this project?
 I like the MIT license. Just use it as you like, but remember to keep the original author(s) in your source code files. Read the [LICENSE](https://github.com/julianxhokaxhiu/twypo/blob/master/LICENSE) file for more information.
+
+## Reference
+
+The namespace used for the returned collection on the view, is based on the default empty installation of typo3. You can change some of them (ex. left, middle, etc.) using the TypoScript configuration. See `TWYPO_COLUMN_MAPPING` in [setup.txt](https://github.com/julianxhokaxhiu/twypo/blob/master/Configuration/TypoScript/setup.txt).
+
+```
+app
+  menu // The website main menu
+  page // The current page information (title, subtitle, etc.)
+  content // The current items for the page.
+    left // The left area of the current page
+    middle // The middle area of the current page
+    right // The right area of the current page
+    border // The border area of the current page
+```
+
+If you want to know what's inside of it:
+
+```
+{{ dump(app) }}
+```
+
+or
+
+```
+{{ dump(app.menu) }}
+```
+
+If you want to see how these items are currently printed, see [index.twig](https://github.com/julianxhokaxhiu/twypo/blob/master/Resources/Private/Templates/index.twig).
