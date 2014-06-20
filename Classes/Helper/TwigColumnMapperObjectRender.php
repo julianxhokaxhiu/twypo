@@ -22,11 +22,11 @@
 	SOFTWARE.
 */
 
-namespace JX\Twypo;
+namespace JX\Twypo\Helper;
 
 class TwigColumnMapperObjectRender {
 
-	const CONTENT_OBJECT_NAME = 'TWIGCOLUMNMAPPING';
+	const CONTENT_OBJECT_NAME = 'TWYPO_COLUMN_MAPPING';
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $parent ) {
 		global $TWYPO;
@@ -38,6 +38,6 @@ class TwigColumnMapperObjectRender {
 			}
 		}
 
-		$TWYPO->assign( 'colMapping', $ret );
+		$TWYPO->assignInternal( 'colMapping', $ret );
 	}
 }
