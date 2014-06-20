@@ -101,22 +101,6 @@ class TwigPageObjectRenderer {
 
         		break;
         	}
-        	case 'CONTENT': {
-        		$key = 'page';
-        		$data = $params['data'];
-
-        		$ret = array(
-					'title' => $data['title'],
-					'subtitle' => $data['subtitle'],
-					'url' => $this->templateData['baseUrl'] . $this->templateData['currentPageUrl'],
-					'meta' => array(
-						'keywords' => $data['keywords'],
-						'description' => $data['description'],
-						'abstract' => $data['abstract']
-					)
-				);
-        		break;
-        	}
         	default: break;
         }
 
@@ -227,10 +211,18 @@ class TwigPageObjectRenderer {
 	}
 
 	private function renderData($conf) {
-        // Render TypoScript objects
-		foreach( $conf['data.'] as $key => $value ) {
+        // Render TypoScript objects to get back data
+        $this->renderTSObj( $conf['data.'] , true );
+
+		// Just render the objects
+        $this->renderTSObj( $conf['render.'] );
+	}
+
+	private function renderTSObj($conf, $assign = false) {
+		foreach( $conf as $key => $value ) {
 			if ( !(substr( $key, -1, 1 ) == '.') ) {
-				$this->templateData[$key] = $this->cObj->cObjGetSingle( $conf['data.'][$key], $conf['data.'][$key . '.'] );
+				$ret = $this->cObj->cObjGetSingle( $conf[$key], $conf[$key . '.'] );
+				if ( $assign ) $this->templateData[$key] = $ret;
 			}
 		}
 	}
