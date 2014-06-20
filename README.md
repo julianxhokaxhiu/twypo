@@ -27,7 +27,11 @@ I like the MIT license. Just use it as you like, but remember to keep the origin
 
 ## Reference
 
-The namespace used for the returned collection on the view, is based on the default empty installation of typo3. You can change some of them (ex. left, middle, etc.) using the TypoScript configuration. See `TWYPO_COLUMN_MAPPING` in [setup.txt](https://github.com/julianxhokaxhiu/twypo/blob/master/Configuration/TypoScript/setup.txt).
+The namespace used for the returned collection on the view, is based on the default empty installation of typo3.
+
+You can change some of them (ex. left, middle, etc.) using the TypoScript configuration. See `TWYPO_COLUMN_MAPPING` in [setup.txt](https://github.com/julianxhokaxhiu/twypo/blob/master/Configuration/TypoScript/setup.txt#L94).
+
+Also the main layout entrypoint will be decided through the Layout option of the current page on the backend. To see which file will be called, based on that option, see `TWYPO_LAYOUT_MAPPING` in [setup.txt](https://github.com/julianxhokaxhiu/twypo/blob/master/Configuration/TypoScript/setup.txt#L105).
 
 ```
 app
