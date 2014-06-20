@@ -24,7 +24,7 @@
 
 namespace JX\Twypo;
 
-class TwigContentObjectRenderer {
+class TwigContentObjectRender {
 
 	const CONTENT_OBJECT_NAME = 'TWIGCONTENT';
 
@@ -32,21 +32,24 @@ class TwigContentObjectRenderer {
 		global $TSFE, $TWYPO;
 
 		// Get current page info
-		$data = $TSFE->page;
+		$pageData = $TSFE->page;
 		$page = array(
-			'title' => $data['title'],
-			'subtitle' => $data['subtitle'],
+			'title' => $pageData['title'],
+			'subtitle' => $pageData['subtitle'],
 			'url' => $TWYPO->get('baseUrl') . $TWYPO->get('currentPageUrl'),
 			'meta' => array(
-				'keywords' => $data['keywords'],
-				'description' => $data['description'],
-				'abstract' => $data['abstract']
+				'keywords' => $pageData['keywords'],
+				'description' => $pageData['description'],
+				'abstract' => $pageData['abstract']
 			)
 		);
 		$TWYPO->assign('page', $page);
 
+		// Get current page layout
+		$TWYPO->assignInternal('pageLayout', $pageData['layout'] );
+
 		// Get current page items and push to the array
-		$colMapping = $TWYPO->get('colMapping');
+		$colMapping = $TWYPO->getInternal('colMapping');
 		$items = $TWYPO->renderConf( $conf );
 		$content = array();
 		if( count($items) > 0 ) {
