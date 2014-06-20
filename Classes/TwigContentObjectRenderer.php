@@ -24,135 +24,18 @@
 
 namespace JX\Twypo;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 class TwigContentObjectRenderer {
 
-	const CONTENT_OBJECT_NAME = 'TWIGTEMPLATE';
+	const CONTENT_OBJECT_NAME = 'TWIGCONTENT';
 
-	private $cObj = null;
+	public function cObjGetSingleExt( $name, $conf, $TSkey, $parent ) {
+		global $TWYPO;
 
-	private $templatesPath = '';
+		$colMapping = $TWYPO->get('_colMapping');
+		$page = $TWYPO->renderConf( $conf );
 
-	private $templateData = array();
+		$ret = array();
 
-	private $twigUserConf = array();
-
-	private $tplEngine = null;
-
-	public function cObjGetSingleExt( $name, $conf, $TSkey, $objR ) {
-		require_once $this->_getPath( 'Vendor/Twig/lib/Twig/Autoloader.php' );
-        \Twig_Autoloader::register();
-
-		$ret = '';
-
-		// Prepare our global container
-		$GLOBALS['TWYPO'] = $this;
-
-		// Read the configuration
-		$this->cObj = $objR;
-		$this->templatesPath = GeneralUtility::getFileAbsFileName( $conf['path'] );
-		$this->cachePath = GeneralUtility::getFileAbsFileName( $this->cachePath );
-		$this->twigUserConf = $conf['twigInitConf.'];
-
-		// Initialize the template engine
-		$this->initTwig();
-
-		// Assign data
-		$this->assignData($conf);
-
-		// Render the content
-		$ret = $this->render();
-
-		// Return it!
-		return $ret;
-	}
-
-	// Public API to be called by other components
-	public function scrapeData( $type = '', $params = array() ) {
-        $ret = $this->templateData;
-
-        switch ( $type ) {
-        	case 'MENU': {
-        		$data = $params['data'];
-        		$linkDefinition = $params['linkData'];
-
-        		// Do this only once
-				if ( !isset($ret['menu']) )
-					$ret['menu'] = array();
-
-        		// Prepare the array
-				$item = array(
-					'title' => $data['title'],
-					'href' => $this->templateData['baseUrl'] . $linkDefinition['HREF'],
-					'target' => $linkDefinition['TARGET']
-				);
-
-				if ( array_key_exists($data['pid'], $ret['menu']) ) {
-					// It's a children menu
-					if ( !isset( $ret['menu'][ $data['pid'] ]['submenu'] ) ) $ret['menu'][ $data['pid'] ]['submenu'] = array();
-					array_push( $ret['menu'][ $data['pid'] ]['submenu'], $item );
-				} else {
-					// It's a global menu
-					$ret['menu'][ $data['uid'] ] = $item;
-				}
-
-        		break;
-        	}
-        	case 'CONTENT': {
-        		$data = $params['data'];
-
-        		$ret['page'] = array(
-					'title' => $data['title'],
-					'subtitle' => $data['subtitle'],
-					'url' => $this->templateData['baseUrl'] . $this->templateData['currentPageUrl'],
-					'meta' => array(
-						'keywords' => $data['keywords'],
-						'description' => $data['description'],
-						'abstract' => $data['abstract']
-					)
-				);
-        		break;
-        	}
-        	default: break;
-        }
-
-        $this->templateData = $ret;
-    }
-
-	// Internal Only
-	private function initTwig() {
-
-		$baseConfig = array_merge( array(
-			'debug' => true
-		), $this->twigUserConf );
-
-		$loader = new \Twig_Loader_Filesystem($this->templatesPath);
-		$twig = new \Twig_Environment($loader, $baseConfig);
-
-		if ( $baseConfig['debug'] )
-			$twig->addExtension(new \Twig_Extension_Debug());
-
-		$this->tplEngine = $twig;
-	}
-
-	private function assignData($conf) {
-        // Render TypoScript objects
-		foreach( $conf['data.'] as $key => $value ) {
-			if ( !(substr( $key, -1, 1 ) == '.') ) {
-				$this->templateData[$key] = $this->cObj->cObjGetSingle( $conf['data.'][$key], $conf['data.'][$key . '.'] );
-			}
-		}
-	}
-
-	private function render() {
-		return $this->tplEngine->render( 'index.twig', array(
-			'app' => $this->templateData
-		));
-	}
-
-	private function _getPath($path) {
-		return ExtensionManagementUtility::extPath('twypo') . $path;
+		var_dump($page, $colMapping);
 	}
 }
