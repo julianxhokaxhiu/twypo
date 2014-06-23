@@ -39,21 +39,38 @@ app
   page // The current page information (title, subtitle, etc.)
   content // The current items for the page.
     left // The left area of the current page
+    	@items
     middle // The middle area of the current page
+    	@items
     right // The right area of the current page
+    	@items
     border // The border area of the current page
+    	@items
 ```
 
-If you want to know what's inside of it:
+Each `@items` is an array made of single items that have these properties:
+```
+title // The item header text
+text // The item content text
+link
+  url // The url of the link
+  target // the target of the link
+imageUrls // array of items
+  ...
+    url // The abs url of the image
+
+```
+
+If you want to know what's inside of `app`:
 
 ```
 {{ dump(app) }}
 ```
 
-or
+or inside of `app.menu`
 
 ```
 {{ dump(app.menu) }}
 ```
 
-If you want to see how these items are currently printed, see [index.twig](https://github.com/julianxhokaxhiu/twypo/blob/master/Resources/Private/Templates/index.twig).
+If you want to see how these `@items` are currently printed, see [index.twig](https://github.com/julianxhokaxhiu/twypo/blob/master/Resources/Private/Templates/index.twig).
