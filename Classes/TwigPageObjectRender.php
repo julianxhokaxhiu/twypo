@@ -44,7 +44,7 @@ class TwigPageObjectRender {
 	private $internalData = array();
 
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $parent ) {
-		require_once $this->_getPath( 'Vendor/Twig/lib/Twig/Autoloader.php' );
+		require_once $this->getPath( 'Vendor/Twig/lib/Twig/Autoloader.php' );
         \Twig_Autoloader::register();
 
 		$ret = '';
@@ -232,13 +232,17 @@ class TwigPageObjectRender {
 
 		// Just render the objects
         $this->renderTSObj( $conf['render.'] );
+
+        // Get CSS and JS files
+        $this->assign('css', $this->getFilesInDirectory( $this->get('cssFiles') ) );
+        $this->assign('js', $this->getFilesInDirectory( $this->get('jsFiles') ) );
 	}
 
 	private function renderTSObj($conf, $assign = false) {
 		foreach( $conf as $key => $value ) {
 			if ( !(substr( $key, -1, 1 ) == '.') ) {
 				$ret = $this->cObj->cObjGetSingle( $conf[$key], $conf[$key . '.'] );
-				if ( $assign ) $this->templateData[$key] = $ret;
+				if ( $assign ) $this->assign($key, $ret);
 			}
 		}
 	}
@@ -254,7 +258,16 @@ class TwigPageObjectRender {
 		));
 	}
 
-	private function _getPath($path) {
+	private function getPath($path) {
 		return ExtensionManagementUtility::extPath('twypo') . $path;
+	}
+
+	private function getFilesInDirectory($path) {
+		list($extKey, $local) = explode('/', substr($path, 4), 2);
+		$relPath = ExtensionManagementUtility::extRelPath($extKey) . $local;
+		return array(
+			'path' => $relPath,
+			'files' => GeneralUtility::getFilesInDir( GeneralUtility::getFileAbsFileName($path) )
+		);
 	}
 }
