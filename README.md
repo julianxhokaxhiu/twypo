@@ -35,6 +35,12 @@ Also the main layout entrypoint will be decided through the Layout option of the
 
 ```
 app
+  css
+    path // Relative Path of CSS files
+    files // array of files found in the cssFiles TS folder
+  js
+    path // Relative Path of JS files
+    files // array of files found in the jsFiles TS folder
   menu // The website main menu
   page // The current page information (title, subtitle, etc.)
   content // The current items for the page.
