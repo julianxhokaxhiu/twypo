@@ -28,8 +28,12 @@ class TwigContentObjectRender {
 
 	const CONTENT_OBJECT_NAME = 'TWIGCONTENT';
 
+	private $cObj = null;
+
 	public function cObjGetSingleExt( $name, $conf, $TSkey, $parent ) {
 		global $TSFE, $TWYPO;
+
+		$this->cObj = $parent;
 
 		// Get current page info
 		$pageData = $TSFE->page;
@@ -59,12 +63,34 @@ class TwigContentObjectRender {
 
 				array_push($content[ $colMapping[intval($item['colPos'])] ], array(
 					'title' => $item['header'],
-					'text' => $item['bodytext'],
-					'link' => $item['header_link'],
+					'text' => $this->parseRTE( $item['bodytext'] ),
+					'link' => array(
+						'url' => $this->getLink( $item['header_link'], 'url' ),
+						'target' => $this->getLink( $item['header_link'], 'target' )
+					),
 					'imageUrls' => explode(',', $item['image'])
 				));
 			}
 		}
 		$TWYPO->assign('content', $content);
+	}
+
+	// Utility
+	// @part = url|target
+	private function getLink($link, $part = 'url') {
+		return $this->cObj->typoLink( $link, array(
+			'parameter' => $link,
+			'forceAbsoluteUrl' => true,
+			'returnLast' => 'url'
+		));
+	}
+
+	private function parseRTE($text) {
+		global $TSFE;
+		$ret = '';
+
+		$parseFunc = $TSFE->tmpl->setup['lib.']['parseFunc_RTE.'];
+		if ( is_array($parseFunc) ) $ret = $this->cObj->parseFunc($text, $parseFunc);
+		return $ret;
 	}
 }
