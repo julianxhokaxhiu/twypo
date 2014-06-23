@@ -26,7 +26,7 @@ namespace JX\Twypo;
 
 class TwigContentObjectRender {
 
-	const CONTENT_OBJECT_NAME = 'TWIGCONTENT';
+	const CONTENT_OBJECT_NAME = 'TWIG_CONTENT';
 
 	private $cObj = null;
 

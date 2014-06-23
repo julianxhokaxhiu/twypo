@@ -33,7 +33,7 @@ twypo.mainmenu.1 {
 }
 twypo.mainmenu.2 < twypo.tmenu
 
-twypo.content = TWIGCONTENT
+twypo.content = TWIG_CONTENT
 twypo.content {
 	table = tt_content
 	select {
