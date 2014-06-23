@@ -37,28 +37,10 @@ twypo.content = TWIGCONTENT
 twypo.content {
 	table = tt_content
 	select {
-		selectFields = uid, pid, header, bodytext, image, header_link, colPos
+		selectFields = uid, pid, header, bodytext, header_link, colPos
 		orderBy = sorting
 	}
-	fieldRendering {
-		image {
-	        split {
-				token = ,
-				cObjNum = 1
-				1 = COA
-				1 {
-					5 = IMG_RESOURCE
-					5 {
-						file {
-							import.current = 1
-							import = fileadmin/user_upload/
-						}
-					}
-					wrap = /|,
-				}
-			}
-		}
-    }
+	#fieldRendering {}
 }
 
 page = PAGE
