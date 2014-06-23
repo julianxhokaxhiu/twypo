@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{app.page.title}}</title>
+	{% for css in app.css.files %}
+	<link href="{{ app.css.path }}{{ css }}" rel="stylesheet">
+	{% endfor %}
+</head>
+<body>
+	{% block content %}
+	{% endblock %}
+	<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+	{% for js in app.js.files %}
+	<script src="{{ app.js.path }}{{js}}"></script>
+	{% endfor %}
+</body>
+</html>

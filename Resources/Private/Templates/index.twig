@@ -1,3 +1,5 @@
+{% extends '_html.twig' %}
+{% block content %}
 {% spaceless %}
 <h1>This prints if Twypo is working</h1>
 Hello Twig Engine! I am a Twig template right now :)
@@ -44,3 +46,4 @@ Hello Twig Engine! I am a Twig template right now :)
 
 <h1>This prints the current content data</h1>
 {{dump(app.content)}}
+{% endblock %}
