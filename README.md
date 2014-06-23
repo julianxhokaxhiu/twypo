@@ -55,9 +55,15 @@ text // The item content text
 link
   url // The url of the link
   target // the target of the link
-imageUrls // array of items
+files // array of items
   ...
     url // The abs url of the image
+    type // The fileType (internal integer used by Typo3 to flag "content" items stored on the DB)
+    mime // The mimetype
+    title // The title of the file
+    description // The description of the file
+    extension // The extension of the file
+    missing // This flag tells you if the file is missing in the disk
 
 ```
 
