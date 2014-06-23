@@ -70,6 +70,12 @@ page {
 				parameter.data=TSFE:id
 				returnLast=url
 			}
+
+			cssFiles = TEXT
+			cssFiles.value = EXT:twypo/Resources/Public/css/
+
+			jsFiles = TEXT
+			jsFiles.value = EXT:twypo/Resources/Public/js/
 		}
 		render {
 			1 < twypo.mainmenu
