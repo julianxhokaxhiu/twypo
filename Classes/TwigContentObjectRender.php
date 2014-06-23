@@ -68,7 +68,7 @@ class TwigContentObjectRender {
 						'url' => $this->getLink( $item['header_link'], 'url' ),
 						'target' => $this->getLink( $item['header_link'], 'target' )
 					),
-					'imageUrls' => explode(',', $item['image'])
+					'imageUrls' => $this->getImages($item['uid'])
 				));
 			}
 		}
@@ -92,5 +92,33 @@ class TwigContentObjectRender {
 		$parseFunc = $TSFE->tmpl->setup['lib.']['parseFunc_RTE.'];
 		if ( is_array($parseFunc) ) $ret = $this->cObj->parseFunc($text, $parseFunc);
 		return $ret;
+	}
+
+	/*
+		Snippet got from Official WIKI documentation.
+		@ref: http://wiki.typo3.org/File_Abstraction_Layer
+	*/
+	private function getImages($uid, $conf) {
+		$ret = array();
+
+		$fileRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\FileRepository');
+		$fileObjects = $fileRepository->findByRelation('tt_content', 'image', $uid);
+
+		// get Imageobject information
+		$files = array();
+		foreach ($fileObjects as $key => $value) {
+			$fileDefinition = $value->getOriginalFile()->getProperties();
+			array_push( $ret, array(
+				'url' => $this->getAbsFilePath( $fileDefinition['identifier'] )
+			));
+		}
+
+		return $ret;
+	}
+
+	private function getAbsFilePath($filePath){
+		global $TWYPO;
+
+		return $TWYPO->get('baseUrl') . 'fileadmin/' . $filePath;
 	}
 }
