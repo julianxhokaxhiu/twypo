@@ -86,3 +86,18 @@ or inside of `app.menu`
 ```
 
 If you want to see how these `@items` are currently printed, see [index.twig](https://github.com/julianxhokaxhiu/twypo/blob/master/Resources/Private/Templates/index.twig).
+
+## Extension Developers Reference
+
+You can integrate Twypo directly from your plugin and provide the required data and functions by using one simple line of code:
+```
+global $TWYPO;
+```
+Include that line in any module, function or PHP code that is requiring it, and afterwards you can use public available APIs to assign template data (or internal data, mostly used for setting temporary data between modules that doesn't live in the same moment).
+
+List of Public available API:
+- `$TWYPO->scrapeData()`: mostly used by Twypo itself, useful for scraping basic data that comes directly from TYPO3 itself, for example Menus.
+- `$TWYPO->get($key)`: get the template Data value for the corresponding key (a string).
+- `$TWYPO->getInternal($key)`: get the internal Data value for the corresponding key (a string).
+- `$TWYPO->assign($key,$value)`: set the template Data value for the assigned key (a string).
+- `$TWYPO->assignInternal($key,$value)` set the internal Data value for the assigned key (a string).
